@@ -1,0 +1,183 @@
+    1  uname -a
+    2  sudo apt update && sudo apt upgrade
+    3  cat /etc/apt/sources.list
+    4  sudo apt install vim
+    5  cd ~
+    6  cd Downoloads
+    7  cd Downloads
+    8  man ls
+    9  ls -l
+   10  dpkg -i package_name.deb
+   11  sudo dpkg -i package_name.deb
+   12  touch package_name.deb
+   13  dpkg -i package_name.deb
+   14  sudo dpkg -i package_name.deb
+   15  cd /
+   16  sudo su
+   17  echo "hi all"
+   18  echo "PWD hi all here!"
+   19  echo "$PWD hi all here!"
+   20  touch hi.sh
+   21  cd ~
+   22  touch hi.sh
+   23  echo $PATH
+   24  vi h.sh
+   25  vi hi.sh
+   26  ./hi.sh
+   27  chmod a+x hi.sh
+   28  chmod a+rwx hi.sh
+   29  ./hi.sh
+   30  ./hi.sh Ukraine
+   31  mkdir scripts
+   32  cp hi.sh scripts/
+   33  cp scripts Documents/
+   34  cp -r  scripts Documents/
+   35  cd scripts
+   36  mv hi.sh ../
+   37  cd ..
+   38  rm scripts
+   39  rm -r scripts
+   40  cd /bin
+   41  ls -l
+   42  cd ../..
+   43  tar -cvf scripts.tar scripts/
+   44  cd ~
+   45  tar -cvf scripts.tar scripts/
+   46  mkdir scripts
+   47  tar -cvf scripts.tar scripts/
+   48  cat hi.sh
+   49  cat /var/log/syslog
+   50  tail -n 20 /var/log/syslog
+   51  sudo cat /var/log/syslog
+   52  sudo tail -n 20 /var/log/syslog
+   53  sudo less /var/log/syslog
+   54  cd /
+   55  find . -name "dhcp"
+   56  find . -name "*dhcp*"
+   57  find . -name "*dhcp*" | grep -i "dhcp"
+   58  find . -name "*dhcp*" | grep -i "etc"
+   59  ping google.com
+   60  ping google.com &
+   61  fg
+   62  sudo ping google.com &
+   63  fg
+   64  cd ~
+   65  ls -l
+   66  chmod +x script.sh
+   67  cd ~
+   68  chmod +x script.sh
+   69  sudo apt update
+   70  sudo apt install git vim-gtk tree curl
+   71  sudo apt install git vim vim-gtk3 tree curl
+   72  sudo apt install make libncurses5-dev libssl-dev bc bison flex
+   73  sudo apt install ccache
+   74  ccache -M 5G
+   75  sudo usermod -a -G dialout $USER
+   76  sudo apt install minicom
+   77  sudo vim /etc/udev/rules.d/51-android.rules
+   78  sudo udevadm control --reload && sudo udevadm trigger
+   79  cd ~/Downloads
+   80  wget https://developer.arm.com/-/media/Files/downloads/gnu-a/8.3-2019.03/binrel/gcc-arm-8.3-2019.03-x86_64-arm-eabi.tar.xz
+   81  wget https://developer.arm.com/-/media/Files/downloads/gnu-a/8.3-2019.03/binrel/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf.tar.xz
+   82  sudo tar xJvf gcc-arm-8.3-2019.03-x86_64-arm-eabi.tar.xz -C /opt/
+   83  sudo tar xJvf gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf.tar.xz -C /opt/
+   84  ls -l /opt/
+   85  mkdir ~/repos && cd ~/repos
+   86  git clone https://gitlab.denx.de/u-boot/u-boot.git
+   87  cd u-boot
+   88  git checkout v2019.07
+   89  git config commit.gpgsign false
+   90  curl https://patchwork.ozlabs.org/series/130450/mbox/ | git am
+   91  export PATH=/opt/gcc-arm-8.3-2019.03-x86_64-arm-eabi/bin:$PATH
+   92  export CROSS_COMPILE='ccache arm-eabi-'
+   93  export ARCH=arm
+   94  make am335x_boneblack_defconfig
+   95  make HOSTCFLAGS="-O2 -g -fcommon" -j4
+   96  ls -l MLO u-boot.img
+   97  export PATH=/opt/gcc-arm-8.3-2019.03-x86_64-arm-eabi/bin:$PATH
+   98  export CROSS_COMPILE='ccache arm-eabi-'
+   99  export ARCH=arm
+  100  make am335x_boneblack_defconfig
+  101  ls configs | grep am335x
+  102  make am335x_evm_defconfig
+  103  make HOSTCFLAGS="-O2 -g -fcommon" -j4
+  104  ls -l MLO u-boot.img
+  105  cd ~/repos
+  106  git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+  107  [200~cd linux-stable~
+  108  cd linux-stable
+  109  git checkout linux-4.19.y
+  110  mkdir fragments
+  111  nano fragments/bbb.cfg
+  112  ./scripts/kconfig/merge_config.sh arch/arm/configs/multi_v7_defconfig fragments/bbb.cfg
+  113  make -j4 zImage modules am335x-boneblack.dtb
+  114  cd ~/repos
+  115  git clone git://git.busybox.net/busybox
+  116  cd busybox
+  117  git checkout 1_31_stable
+  118  export ARCH=arm
+  119  export PATH=/opt/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin:$PATH
+  120  export CROSS_COMPILE="ccache arm-linux-gnueabihf-"
+  121  make defconfig
+  122  [200~make -j4~
+  123  make -j4
+  124  make install
+  125  mkdir -p install/{boot,dev,etc/init.d,lib,proc,root,sys/kernel/debug,tmp}
+  126  cat << 'EOF' > install/etc/init.d/rcS
+  127  #!/bin/sh
+  128  mount -t sysfs none /sys
+  129  mount -t proc none /proc
+  130  mount -t debugfs none /sys/kernel/debug
+  131  echo /sbin/mdev > /proc/sys/kernel/hotplug
+  132  mdev -s
+  133  EOF
+  134  chmod +x install/etc/init.d/rcS
+  135  ln -s bin/busybox install/init
+  136  cp ~/repos/linux-stable/arch/arm/boot/zImage install/boot/
+  137  cp ~/repos/linux-stable/arch/arm/boot/dts/am335x-boneblack.dtb install/boot/
+  138  SYSROOT="/opt/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/arm-linux-gnueabihf/libc"
+  139  cp -a $SYSROOT/lib/* install/lib/
+  140  cd install
+  141  find . | cpio -o -H newc | gzip -9 > ../rootfs.cpio.gz
+  142  cd ..
+  143  ls -l _install
+  144  ls -l install
+  145  cp -a _install/* install/
+  146  ls -l install
+  147  cd install
+  148  find . | cpio -o -H newc | gzip -9 > ../rootfs.cpio.gz
+  149  cd ..
+  150  ls -l _install
+  151  ls -l install
+  152  sudo apt install qemu-system-arm
+  153  qemu-system-arm -kernel install/boot/zImage -initrd rootfs.cpio.gz -machine virt -nographic -m 512 --append "root=/dev/ram0 rw console=ttyAMA0,115200 mem=512M"
+  154  history -w~
+  155  history > ~/Desktop/lab3_commands.txt
+  156  clear
+  157  cd hello_module
+  158  cd
+  159  cd hello_modle
+  160  cd hello_module
+  161  cd
+  162  touch hello.c
+  163  open hello.c
+  164  touch Makefile
+  165  cd ~/repos/linux-stable && pwd
+  166  Scd ~/Desktop/hello_module
+  167  cd ~/Desktop/hello_module
+  168  nano Makefile
+  169  make
+  170  ls -l hello.ko
+  171  export PATH=/opt/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf/bin:$PATH
+  172  make
+  173  ls -l hello.ko
+  174  cd ~/repos/busybox
+  175  mkdir rootfs && cd rootfs
+  176  gunzip -c ../rootfs.cpio.gz | cpio -idmv
+  177  cp ~/Desktop/hello_module/hello.ko ./root/
+  178  find . | cpio -o -H newc | gzip -9 > ../rootfs_new.cpio.gz
+  179  cd ..
+  180  rm -rf rootfs
+  181  qemu-system-arm -kernel install/boot/zImage -initrd rootfs_new.cpio.gz -machine virt -nographic -m 512 --append "root=/dev/ram0 rw console=ttyAMA0,115200 mem=512M"
+  182  history -w
+  183  history > ~/Desktop/lab4_commands.txt
